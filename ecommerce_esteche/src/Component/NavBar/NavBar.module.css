@@ -1,0 +1,64 @@
+@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css);
+
+.header {
+	position: fixed;
+	left: 0;
+	right: 0;
+	height: 46px;
+	
+	line-height: 46px;
+	color: #fff;
+	
+	background-color: #3f51b5;
+  }
+  
+  .headerLogo {
+	font-weight: 700;
+	padding: 0 25px;
+	float: left;
+	color: lightgrey;
+  }
+  
+.menu {
+	float: left;	
+	
+  }
+  
+ .menu a {
+	color: white;
+	padding: 0 10px;
+	font-size: xx-small;
+  }
+  
+  .menu a:hover {
+	color: #000000;
+  }
+/* para el dropdown o lista de articulos
+  .shopping-cart{
+	margin: 20px 0;
+	float: right;
+	background: black;
+	width: 320px;
+	position: relative;
+	border-radius: 3px;
+	padding: 20px;
+  }
+*/
+  
+  .carritoIconDiv{
+	float: right;
+	font-weight: 700;
+	padding: 0 15px;	
+  }
+
+  .carritoIconDiv a{
+	display: inline;
+	float: right;
+	padding-left: 10px;
+	color: white;
+  }
+
+  .carritoIconDiv a:hover{
+	color: black
+	
+  }
