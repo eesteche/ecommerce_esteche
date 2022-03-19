@@ -1,3 +1,4 @@
+import CartWidget from '../CartWidget/CartWidget';
 import styles from './NavBar.module.css'
 function NavBar() {
     return (
@@ -13,9 +14,7 @@ function NavBar() {
                 <a href="#">Juegos</a>
             </nav>
 
-            <div className={styles.carritoIconDiv}>
-            <a href="#" ><i className="fa fa-shopping-cart"></i></a>
-            </div>
+            <CartWidget/>
 
         </header>
 
