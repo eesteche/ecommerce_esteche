@@ -3,14 +3,18 @@ import styles from './ItemCount.module.css'
 const ItemCount = ({ initial = 0, stock, onAdd }) => {
     const [count, setCount] = useState(initial)
 
-
     const increment = () => {
-        if (count < stock) {
+        if (count < stock && stock > 0) {
             setCount(count + 1)
         }
     }
     const decrement = () => {
-        setCount(count - 1)
+        if(stock > 0 && count > 1){
+            setCount(count - 1);    
+        }else if (count == 1){
+            console.log("borraria este item del carrito");
+        }
+        
     }
 
     return (
