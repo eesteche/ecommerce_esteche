@@ -1,7 +1,7 @@
 @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css);
 
 .header {
-	position: fixed;
+	position: absolute;
 	left: 0;
 	right: 0;
 	height: 46px;

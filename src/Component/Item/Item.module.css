@@ -1,0 +1,14 @@
+.footer-wrapper>button{
+   display: inline;
+}
+.card-img-top {
+   width: 100%;
+   height: 15vw;
+   object-fit: cover;
+}
+.card-text{
+   font-size:19px;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   overflow: hidden;
+}
