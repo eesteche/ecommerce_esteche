@@ -24,23 +24,63 @@
 	
   }
   
- .menu a {
-	color: white;
-	padding: 0 10px;
-	font-size: xx-small;
+  .Categories {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
   }
   
-  .menu a:hover {
-	color: #000000;
+  .Option {    
+    text-decoration: none;
+    border-radius: 25;
+    margin: 0 50px;    
+    width: auto;
+    padding: 0 10;
+    font-size: xx-small;
+    border-radius: 8px;
+    flex: none;
+    display: flex;
+    order: 1;
+    align-self: center;
+    flex-grow: 0;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: #FFFFFF;
+    border: none;
+    border-style: none;
+    cursor: pointer;
+    outline: inherit;
   }
-/* para el dropdown o lista de articulos
-  .shopping-cart{
-	margin: 20px 0;
-	float: right;
-	background: black;
-	width: 320px;
-	position: relative;
-	border-radius: 3px;
-	padding: 20px;
+
+  .Option:hover { color: #000000;}
+  .ActiveOption:hover{ color: #000000;}
+
+  .ActiveOption {
+    /* color: #8C30F5; */
+    text-decoration: underline;
+    border-radius: 25;
+    margin: 0 50px;
+    /* TODO */
+    width: auto;
+    padding: 0 10;
+    font-size: medium;	
+    border-radius: 8px;
+    flex: none;
+    display: flex;
+    order: 1;
+    align-self: center;
+    flex-grow: 0;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: #FFFFFF;
+    border: none;
+    border-style: none;
+    cursor: pointer;
+    outline: inherit;
   }
-*/
+  
+  .NavLink {
+    color :rgb(255, 0, 0)
+  }

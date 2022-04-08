@@ -1,22 +1,8 @@
 import styles from './Item.module.css'
-import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
-const Item = ({ initial = 0, onAdd, product }) => {
-    const [count, setCount] = useState(initial)
-
-    const increment = () => {
-        if (count < product.stock && product.stock > 0) {
-            setCount(count + 1)
-        }
-    }
-    const decrement = () => {
-        if (product.stock > 0 && count > 1) {
-            setCount(count - 1);
-        } else if (count === 1) {
-            console.log("borraria este item del carrito");
-        }
-
-    }
+const Item = ({ product }) => {
+    
 
     return (
 
@@ -28,10 +14,8 @@ const Item = ({ initial = 0, onAdd, product }) => {
             </div>
             <div className="card-footer">
                 <div className={styles["footer-wrapper"]}>
-                    <p>Cantidad: {count} Stock disponible: {product.stock}</p>
-                    <button className="btn btn-secondary" onClick={decrement}>-</button>
-                    <button className="btn btn-secondary" onClick={increment}>+</button>
-                    <button className="btn btn-success" onClick={() => onAdd(count)}>Agregar al carrito</button>
+                    <p>Stock disponible: {product.stock}</p>                    
+                    <Link to={`/item/${product.id}`} className='btn btn-secondary'>Ver detalle</Link>
                 </div>
             </div>
         </div>

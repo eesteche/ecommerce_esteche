@@ -1,14 +1,18 @@
   
   .carritoIconDiv{
+	position: absolute;
+	left: 10;
+	right: 0;
+	top: 0;
 	float: right;
 	font-weight: 700;
-	padding: 0 15px;	
+	padding: 0 10px;	
   }
 
   .carritoIconDiv a{
 	display: inline;
 	float: right;
-	padding-left: 10px;
+	padding-left: 0 10px;
 	color: white;
   }
 
