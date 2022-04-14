@@ -4,7 +4,7 @@ import ItemDetail from "../ItemDetail/ItemDetail"
 import { useParams } from 'react-router-dom'
 import styles from './ItemDetailContainer.module.css'
 
-const ItemDetailContainer = () => {
+const ItemDetailContainer = ({addToCart, cart}) => {
     const [product, setProduct] = useState();
     const { id } = useParams();
     const [loading, setLoading] = useState(true);    
@@ -39,18 +39,9 @@ const ItemDetailContainer = () => {
         </div>
     }
     
-    const onAdd = (quantity) => {
-        if (product.stock > 0) {
-            console.log("El item se puede comprar, hay: " + product.stock + " en stock.")
-        } else {
-            console.log("No podemos vender lo que no tenemos.")
-        }
-
-    }
-
     return(
         <div className={styles.ItemDetailContainer}>
-            <ItemDetail initial={1} stock={product.stock} onAdd={onAdd} p={product} />
+            <ItemDetail {...product} addToCart={addToCart} cart={cart} />
         </div>
     )
 

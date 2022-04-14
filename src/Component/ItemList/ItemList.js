@@ -4,7 +4,7 @@ import Item from "../Item/Item"
 const ItemList = ({ products }) => {
 
     return (
-        <div className="card-deck">
+        <div className="card-deck ListGroup">
 
             <div className="col">
                 <div className="row row-cols-1 row-cols-md-5 g-3">
