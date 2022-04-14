@@ -4,14 +4,20 @@ const Context = createContext()
 
 export const CartContextProvider = ({ children }) => {
     const [cart, setCart] = useState([])
-    console.log(cart)
+
     const addItem = (product, quantity) => {
         const objItemCart = {
             ...product,
             quantity
         }
-        
-        setCart([...cart, objItemCart ])
+        if (quantity > 0) {
+            if (productInCart(product.id)) {
+                increaseQuantityId(product.id,quantity);
+            } else {
+                setCart([...cart, objItemCart])
+            }
+        }
+
     }
 
     const clearCart = () => {
@@ -27,7 +33,31 @@ export const CartContextProvider = ({ children }) => {
         return count
     }
 
-     const increaseQuantity = (i) => {
+    const productInCart = (id) => {
+        var exists = false;
+        cart.forEach(prod => {
+            if (prod.id === id) {                
+                exists = true;                
+            }
+        });
+        return exists
+    }
+
+    const increaseQuantityId = (id,qty) => {
+        setCart((preValue) =>
+        preValue.map((data) => {            
+            if (data.id === id) {                
+                return {
+                    ...data,
+                    quantity: data.quantity + qty
+                };
+            }
+            return data;
+        })
+    );
+    }
+
+    const increaseQuantity = (i) => {
         setCart((preValue) =>
             preValue.map((data, o) => {
                 if (i === o) {
@@ -63,15 +93,15 @@ export const CartContextProvider = ({ children }) => {
                     return i !== o;
                 })
             );
-           
+
         }
     };
-    
+
     const getCartTotal = cart.reduce((acc, data) => acc + data.price * data.quantity, 0);
 
     return (
-        <Context.Provider value={{ 
-            cart, 
+        <Context.Provider value={{
+            cart,
             addItem,
             clearCart,
             getQuantity,

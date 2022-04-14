@@ -54,7 +54,7 @@
     background-color: rgb(241, 207, 207);
     border-color: #5982ce;
     outline: 0;
-    box-shadow: 0 3px 8px 0 rgb(0 0 0 / 10%);
+    box-shadow: 0 3px 8px 0 rgb(0 0 0 / 20%);
 }
 
 .product-qty-btn {

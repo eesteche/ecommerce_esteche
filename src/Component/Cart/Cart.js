@@ -3,7 +3,7 @@ import CartContext from '../../Context/CartContext'
 import './Cart.css';
 const Cart = () => {
 
-    const { cart, 
+    const { cart,
         clearCart,
         getQuantity,
         getCartTotal,
@@ -12,8 +12,6 @@ const Cart = () => {
         removeProduct } = useContext(CartContext)
 
     return (
-
-        //{cart.map(prod => <li key={prod.id}>{prod.name}</li>)}
 
         <div className="row justify-content-center m-0">
             <div className="col-md-8 mt-5 mb-5">
@@ -27,18 +25,23 @@ const Cart = () => {
                     </div>
                     <div className="card-body p-0">
                         {
-                            getQuantity() === 0 ? <table className="table cart-table mb-0">
-                                <tbody>
-                                    <tr>
-                                        <td colSpan="6">
-                                            <div className="cart-empty">
-                                                <i className="fa fa-shopping-cart"></i>
-                                                <p>El carrito está vacío</p>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table> :
+                            getQuantity() === 0 ?
+
+                                <table className="table cart-table mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <td colSpan="6">
+                                                <div className="cart-empty">
+                                                    <i className="fa fa-shopping-cart"></i>
+                                                    <p>El carrito está vacío</p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                :
+
                                 <table className="table cart-table mb-0">
                                     <thead>
                                         <tr>
@@ -53,7 +56,7 @@ const Cart = () => {
                                     <tbody>
                                         {
                                             cart.map((data, index) => {
-                                                const { id , title , description, price , category, stock, pictureUrl,quantity } = data;
+                                                const { id, title, description, price, category, stock, pictureUrl, quantity } = data;
                                                 return (
                                                     <tr key={index}>
                                                         <td><button className="product-delete" onClick={() => removeProduct(index)}><i className="fa fa-trash"></i></button></td>
