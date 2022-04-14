@@ -1,6 +1,7 @@
 import { useContext } from "react"
 import CartContext from '../../Context/CartContext'
 import './Cart.css';
+import { NavLink} from 'react-router-dom'
 const Cart = () => {
 
     const { cart,
@@ -34,6 +35,7 @@ const Cart = () => {
                                                 <div className="cart-empty">
                                                     <i className="fa fa-shopping-cart"></i>
                                                     <p>El carrito está vacío</p>
+                                                    <NavLink to={'/'} > Buscar mas productos... </NavLink>
                                                 </div>
                                             </td>
                                         </tr>

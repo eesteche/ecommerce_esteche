@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom'
 import CartContext from '../../Context/CartContext'
 function CartWidget() {
     const {getQuantity} = useContext(CartContext);
-    return (
-    		          
+    if(getQuantity() > 0){
+        return (
+    	      
             <div className={styles.carritoIconDiv}>
 	    <Link to={'/cart'} className="CartWidget"> 
            {getQuantity()} <i className="fa fa-shopping-cart"></i>
@@ -15,6 +16,13 @@ function CartWidget() {
 
 
     );
+    }else{
+        return(
+        <div className={styles.carritoIconDiv}>
+        </div>
+        )
+    }
+    
 }
 
 export default CartWidget;

@@ -8,10 +8,10 @@ function NavBar() {
     return (
         <div className="container">
             <header className={styles.header}>
-
-                <a href="http://localhost:3000/" className={styles.headerLogo}>Edgar's MarketPlace</a>
-
+                
+                
                 <nav className={styles.Categories}>
+                    <NavLink to="/" className={({ isActive }) => isActive ? styles.ActiveOption : styles.Option}>Edgar's Marketplace</NavLink>
                     <NavLink to="/category/tecnologia" className={({ isActive }) => isActive ? styles.ActiveOption : styles.Option}>Tecnologia</NavLink>
                     <NavLink to="/category/muebles" className={({ isActive }) => isActive ? styles.ActiveOption : styles.Option}>Muebles</NavLink>
                     <NavLink to="/category/electro" className={({ isActive }) => isActive ? styles.ActiveOption : styles.Option}>Electrodomesticos</NavLink>
