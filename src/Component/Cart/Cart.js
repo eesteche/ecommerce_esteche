@@ -22,7 +22,7 @@ const Cart = () => {
 
     const createOrder = (event) => {
         event.preventDefault();
-        var currentBuyer = { nombre: event.target.nombre.value, apellido: event.target.apellido.value, phone: event.target.phone.value, email: event.target.email.value };
+        var currentBuyer = { nombre: event.target.nombre.value, apellido: event.target.apellido.value, phone: event.target.phone.value, email: event.target.email.value, state : 'generado' };
 
         if (currentBuyer.nombre.length > 0 && currentBuyer.apellido.length > 0 && parseInt(currentBuyer.phone) > 0) {
             if (event.target.email.value === event.target.email2.value) {
