@@ -25,7 +25,7 @@ const ItemDetailContainer = ({addToCart, cart}) => {
             setProduct([])
         })
     }, [id])   
-
+    
     if (loading) {
 
         return <div className={styles.ItemDetailContainer}>
@@ -33,7 +33,7 @@ const ItemDetailContainer = ({addToCart, cart}) => {
         </div>
     }
 
-    if (product.length === 0) {
+    if (product === undefined ) {
         return <div className={styles.ItemDetailContainer}>
             <h1>El producto no existe...</h1>
         </div>

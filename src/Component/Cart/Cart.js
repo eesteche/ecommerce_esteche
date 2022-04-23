@@ -15,7 +15,6 @@ const Cart = () => {
     const completeOrder = () => {
         if (orderComplete) {
             setOrderComplete(false);
-            //setBuyer({});
         } else {
             setOrderComplete(true);
         }
@@ -23,36 +22,39 @@ const Cart = () => {
 
     const createOrder = (event) => {
         event.preventDefault();
-        var currentBuyer = { email: event.target.email.value, phone: event.target.phone.value };
+        var currentBuyer = { nombre: event.target.nombre.value, apellido: event.target.apellido.value, phone: event.target.phone.value, email: event.target.email.value };
 
-        if (currentBuyer.email.length > 0) {
-            setLoading(true);
-            const objOrder = {
-                buyer: currentBuyer,
-                items: cart,
-                total: getCartTotal
-            };
+        if (currentBuyer.nombre.length > 0 && currentBuyer.apellido.length > 0 && parseInt(currentBuyer.phone) > 0) {
+            if (event.target.email.value === event.target.email2.value) {
+                setLoading(true);
+                const objOrder = {
+                    buyer: currentBuyer,
+                    items: cart,
+                    total: getCartTotal
+                };
 
-            console.log(objOrder);
+                console.log(objOrder);
 
-            createOrderAndUpdateStock(cart, objOrder).then(id => {
-                clearCart()
-                setNotification('success', `La orden se genero correctamente, su codigo de orden es: ${id}`)
-            }).catch((error) => {
-                if (error && error.name === 'outOfStockError' && error.products.length > 0) {
-                    const stringProducts = error.products.map(prod => prod.dataDoc.name).join(', ')
+                createOrderAndUpdateStock(cart, objOrder).then(id => {
+                    clearCart()
+                    setNotification('success', `La orden se genero correctamente, su codigo de orden es: ${id}`)
+                }).catch((error) => {
+                    if (error && error.name === 'outOfStockError' && error.products.length > 0) {
+                        const stringProducts = error.products.map(prod => prod.dataDoc.name).join(', ')
 
-                    setNotification('error', `${error.products.length > 1 ? 'Los productos' : 'El producto'} ${stringProducts} no ${error.products.length > 1 ? 'tienen' : 'tiene'} stock`)
-                } else {
-                    console.log(error)
-                }
-            }).finally(() => {
-                setLoading(false);
-                //setBuyer({});
-                setOrderComplete(false);
-            })
-        }else{
-            console.log( "no buyer: " + event.target.email.value );
+                        setNotification('error', `${error.products.length > 1 ? 'Los productos' : 'El producto'} ${stringProducts} no ${error.products.length > 1 ? 'tienen' : 'tiene'} stock`)
+                    } else {
+                        console.log(error)
+                    }
+                }).finally(() => {
+                    setLoading(false);
+                    setOrderComplete(false);
+                })
+            } else {
+                setNotification('error', 'Los Emails son distintos');
+            }
+        } else {
+            setNotification('error', 'Revise los datos del formulario de cliente.');
         }
 
     }
@@ -160,12 +162,24 @@ const Cart = () => {
                         <div className="container-fluid">
                             <form onSubmit={event => createOrder(event)}>
                                 <div className="form-group">
-                                    <label htmlFor="email">Email</label>
-                                    <input type="text" className="form-control" id="email" placeholder="prueba@prueba.com"></input>
+                                    <label htmlFor="nombre">Nombre</label>
+                                    <input type="text" className="form-control" id="nombre" placeholder="Nombre"></input>
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="apellido">Apellido</label>
+                                    <input type="text" className="form-control" id="apellido" placeholder="Apellido"></input>
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="phone">Telefono</label>
                                     <input type="number" className="form-control" id="phone" placeholder="Telefono"></input>
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="email">Email</label>
+                                    <input type="text" className="form-control" id="email" placeholder="Email"></input>
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="email2">Confirmar Email</label>
+                                    <input type="text" className="form-control" id="email2" placeholder="Confirmar Email"></input>
                                 </div>
                                 <div className="form-group">
                                     <br></br>
