@@ -2,7 +2,7 @@ import styles from './Item.module.css'
 import { Link } from 'react-router-dom'
 
 const Item = ({ product }) => {
-    
+
 
     return (
 
@@ -14,7 +14,8 @@ const Item = ({ product }) => {
             </div>
             <div className="card-footer">
                 <div className={styles["footer-wrapper"]}>
-                    <p>Stock disponible: {product.stock}</p>                    
+                    <span>Precio: USD$ {product.price}</span>
+                    <p>Stock disponible: {product.stock}</p>
                     <Link to={`/item/${product.id}`} className='btn btn-secondary'>Ver detalle</Link>
                 </div>
             </div>

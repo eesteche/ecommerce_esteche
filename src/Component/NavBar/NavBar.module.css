@@ -36,7 +36,7 @@
     margin: 0 50px;    
     width: auto;
     padding: 0 10;
-    font-size: xx-small;
+    font-size: medium;
     border-radius: 8px;
     flex: none;
     display: flex;
@@ -64,7 +64,7 @@
     /* TODO */
     width: auto;
     padding: 0 10;
-    font-size: medium;	
+    font-size: xx-large;	
     border-radius: 8px;
     flex: none;
     display: flex;

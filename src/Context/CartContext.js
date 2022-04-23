@@ -1,10 +1,11 @@
 import { createContext, useState } from "react";
+import { useNotification } from '../notification/notification'
 
 const Context = createContext()
 
 export const CartContextProvider = ({ children }) => {
-    const [cart, setCart] = useState([])
-
+    const [cart, setCart] = useState([]);
+    const { setNotification } = useNotification();
     const addItem = (product, quantity) => {
         const objItemCart = {
             ...product,
@@ -12,7 +13,7 @@ export const CartContextProvider = ({ children }) => {
         }
         if (quantity > 0) {
             if (productInCart(product.id)) {
-                increaseQuantityId(product.id,quantity);
+                increaseQuantityId(product.id, quantity);
             } else {
                 setCart([...cart, objItemCart])
             }
@@ -36,35 +37,43 @@ export const CartContextProvider = ({ children }) => {
     const productInCart = (id) => {
         var exists = false;
         cart.forEach(prod => {
-            if (prod.id === id) {                
-                exists = true;                
+            if (prod.id === id) {
+                exists = true;
             }
         });
         return exists
     }
 
-    const increaseQuantityId = (id,qty) => {
+    const increaseQuantityId = (id, qty) => {
         setCart((preValue) =>
-        preValue.map((data) => {            
-            if (data.id === id) {                
-                return {
-                    ...data,
-                    quantity: data.quantity + qty
-                };
-            }
-            return data;
-        })
-    );
+            preValue.map((data) => {
+                if (data.id === id) {
+                    if (data.quantity < data.stock) {
+                        return {
+                            ...data,
+                            quantity: data.quantity + qty
+                        };
+                    } else {
+                        setNotification('error', 'Supera el stock disponible...');
+                    }                    
+                }
+                return data;
+            })
+        );
     }
 
     const increaseQuantity = (i) => {
         setCart((preValue) =>
             preValue.map((data, o) => {
                 if (i === o) {
-                    return {
-                        ...data,
-                        quantity: data.quantity + 1
-                    };
+                    if (data.quantity < data.stock) {
+                        return {
+                            ...data,
+                            quantity: data.quantity + 1
+                        };
+                    } else {
+                        setNotification('error', 'Supera el stock disponible...');
+                    }
                 }
                 return data;
             })

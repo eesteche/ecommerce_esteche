@@ -1,42 +1,24 @@
-import { useState, useEffect } from 'react'
-import ItemList from '../ItemList/ItemList'
-import { getProducts, getProductsByCategory } from "../../articulosmock"
 import styles from './ItemListContainer.module.css'
+import { useState } from 'react'
+import ItemList from '../ItemList/ItemList'
+import { getProducts } from '../../Services/Firebase/firestore'
+import { useAsync } from '../../hooks/useAsync'
 import { useParams } from 'react-router-dom'
+import { useNotification } from '../../notification/notification'
 
 const ItemListContainer = ({ }) => {
     const [products, setProducts] = useState([])
     const { categoryId } = useParams();
     const [loading, setLoading] = useState(true);
+    const {setNotification} = useNotification();
 
-    useEffect(() => {
-        if (categoryId) {
-            setLoading(true)
-
-            getProductsByCategory(categoryId).then(items => {
-                setProducts(items)
-            }).catch(err => {
-                console.log(err)
-            }).finally(() => {
-                setLoading(false)
-            })
-        } else {
-            setLoading(true)
-
-            getProducts().then(item => {
-                setProducts(item)
-            }).catch(err => {
-                console.log(err)
-            }).finally(() => {
-                setLoading(false)
-            })
-        }
-
-        return (() => {
-            setProducts([])
-        })
-    }, [categoryId])
-
+    useAsync(
+        setLoading, 
+        () => getProducts(categoryId), 
+        setProducts, 
+        () => setNotification('error', 'Hubo un error al cargar los productos'), 
+        [categoryId]
+    )
     if (loading) {
 
         return <div className={styles.products}>

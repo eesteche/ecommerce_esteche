@@ -1,16 +1,61 @@
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import CartContext from '../../Context/CartContext'
 import './Cart.css';
-import { NavLink} from 'react-router-dom'
-const Cart = () => {
+import { NavLink } from 'react-router-dom'
+import { useNotification } from '../../notification/notification'
+import { createOrderAndUpdateStock } from '../../Services/Firebase/firestore'
 
-    const { cart,
-        clearCart,
-        getQuantity,
-        getCartTotal,
-        increaseQuantity,
-        decreaseQuantity,
-        removeProduct } = useContext(CartContext)
+const Cart = () => {
+    const [loading, setLoading] = useState(false);
+    const [orderComplete, setOrderComplete] = useState(false);
+    const { cart, clearCart, getQuantity, getCartTotal, increaseQuantity,
+        decreaseQuantity, removeProduct } = useContext(CartContext);
+    const { setNotification } = useNotification();
+
+    const completeOrder = () => {
+        if (orderComplete) {
+            setOrderComplete(false);
+            //setBuyer({});
+        } else {
+            setOrderComplete(true);
+        }
+    }
+
+    const createOrder = (event) => {
+        event.preventDefault();
+        var currentBuyer = { email: event.target.email.value, phone: event.target.phone.value };
+
+        if (currentBuyer.email.length > 0) {
+            setLoading(true);
+            const objOrder = {
+                buyer: currentBuyer,
+                items: cart,
+                total: getCartTotal
+            };
+
+            console.log(objOrder);
+
+            createOrderAndUpdateStock(cart, objOrder).then(id => {
+                clearCart()
+                setNotification('success', `La orden se genero correctamente, su codigo de orden es: ${id}`)
+            }).catch((error) => {
+                if (error && error.name === 'outOfStockError' && error.products.length > 0) {
+                    const stringProducts = error.products.map(prod => prod.dataDoc.name).join(', ')
+
+                    setNotification('error', `${error.products.length > 1 ? 'Los productos' : 'El producto'} ${stringProducts} no ${error.products.length > 1 ? 'tienen' : 'tiene'} stock`)
+                } else {
+                    console.log(error)
+                }
+            }).finally(() => {
+                setLoading(false);
+                //setBuyer({});
+                setOrderComplete(false);
+            })
+        }else{
+            console.log( "no buyer: " + event.target.email.value );
+        }
+
+    }
 
     return (
 
@@ -21,7 +66,20 @@ const Cart = () => {
                         <div className="card-header-flex">
                             <h5 className="text-white m-0">Checkout Carrito {getQuantity() > 0 ? `(${getQuantity()})` : ''}</h5>
                             {
-                                cart.length > 0 ? <button className="btn btn-danger mt-0 btn-sm" onClick={() => clearCart()}><i className="fa fa-trash-alt mr-2"></i><span>Vaciar Carrito</span></button> : ''}
+                                cart.length > 0 ?
+
+                                    <div>
+                                        {orderComplete ?
+                                            <button className="btn btn-success mt-0 btn-sm" onClick={() => completeOrder()}><i className="fa fa-trash-alt mr-2"></i><span>Cancelar</span></button>
+                                            :
+                                            <button className="btn btn-success mt-0 btn-sm" onClick={() => completeOrder()}><i className="fa fa-trash-alt mr-2"></i><span>Procesar Orden</span></button>
+                                        }
+
+                                        <span> </span>
+                                        <button className="btn btn-danger mt-0 btn-sm" onClick={() => clearCart()}><i className="fa fa-trash-alt mr-2"></i><span>Vaciar Carrito</span></button>
+                                    </div>
+                                    : ''
+                            }
                         </div>
                     </div>
                     <div className="card-body p-0">
@@ -92,8 +150,33 @@ const Cart = () => {
                                     </tfoot>
                                 </table>
                         }
+
                     </div>
+
                 </div>
+                {
+                    orderComplete ?
+
+                        <div className="container-fluid">
+                            <form onSubmit={event => createOrder(event)}>
+                                <div className="form-group">
+                                    <label htmlFor="email">Email</label>
+                                    <input type="text" className="form-control" id="email" placeholder="prueba@prueba.com"></input>
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="phone">Telefono</label>
+                                    <input type="number" className="form-control" id="phone" placeholder="Telefono"></input>
+                                </div>
+                                <div className="form-group">
+                                    <br></br>
+                                    <button type="submit" className="btn btn-primary">Guardar en Firestore</button>
+                                </div>
+                            </form>
+
+                        </div>
+                        :
+                        ''
+                }
             </div>
         </div>
 

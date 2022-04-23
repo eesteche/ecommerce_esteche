@@ -1,12 +1,16 @@
 import { useState } from 'react'
+import { useNotification } from '../../notification/notification'
 
-const ItemCount = ({ onAdd }) => {
-    const [count , setCount] = useState(1)
-
+const ItemCount = ({ onAdd , maxStock }) => {
+    const [count , setCount] = useState(1);
+    const { setNotification } = useNotification();
 
     const increment = () => {
-        setCount(count + 1)
-
+        if(count< maxStock){
+            setCount(count + 1)
+        }else{
+            setNotification('Error', 'El stock máximo es: '+ maxStock);
+        }
     }
     const decrement = () => {
         if(count >= 2){
@@ -16,10 +20,10 @@ const ItemCount = ({ onAdd }) => {
 
     return(
         <div>
-            <button className="btn btn-secondary" onClick={decrement}>-</button>            
-            <button className="btn btn-secondary" onClick={increment}>+</button>
+            <button className="btn btn-secondary btn-sm" onClick={decrement}>-</button>            
+            <button className="btn btn-secondary btn-sm" onClick={increment}>+</button>
             <p>{count}</p>
-            <button className="btn btn-primary" onClick={() => onAdd(count)}>Agregar al carrito</button>
+            <button className="btn btn-primary btn-sm" onClick={() => onAdd(count)}>Agregar al carrito</button>            					
         </div>
     )
 }
