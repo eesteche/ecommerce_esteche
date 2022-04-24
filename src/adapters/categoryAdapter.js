@@ -3,8 +3,7 @@ export const createAdaptedCategory = (doc) => {
 
     const formattedCategory = {
         id: doc.id,
-        description: data.description,
-        order: data.order
+        category: data.categoria
     }
 
     return formattedCategory

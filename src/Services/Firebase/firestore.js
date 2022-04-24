@@ -8,7 +8,7 @@ import { createAdaptedCategory } from '../../adapters/categoryAdapter'
 export const getProducts = (categoryId) => {
     return new Promise((resolve, reject) => {
         const collectionRef = categoryId
-        ? query(collection(firestoreDb, 'products'), where('category', '==', categoryId), limit(10))
+        ? query(collection(firestoreDb, 'products'), where('category', '==', categoryId), limit(20))
         : collection(firestoreDb, 'products')
 
         getDocs(collectionRef).then(querySnapshot => {

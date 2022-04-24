@@ -1,31 +1,25 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { getProductById } from '../../Services/Firebase/firestore'
 import ItemDetail from "../ItemDetail/ItemDetail"
 import { useParams } from 'react-router-dom'
 import styles from './ItemDetailContainer.module.css'
+import { useAsync } from '../../hooks/useAsync'
+import { useNotification } from '../../notification/notification'
 
 const ItemDetailContainer = ({addToCart, cart}) => {
+    const {setNotification} = useNotification();
     const [product, setProduct] = useState();
     const { id } = useParams();
     const [loading, setLoading] = useState(true);    
 
-    useEffect(() => {        
-        if (id) {
-            setLoading(true)
+    useAsync(
+        setLoading, 
+        () => getProductById(id), 
+        setProduct, 
+        () => setNotification('error', 'El producto no existe'), 
+        [id]
+    )
 
-            getProductById(id).then(prod => {
-                setProduct(prod)
-            }).catch(err => {
-                console.log(err)
-            }).finally(() => {                
-                setLoading(false)
-            })
-        }
-        return (() => {
-            setProduct([])
-        })
-    }, [id])   
-    
     if (loading) {
 
         return <div className={styles.ItemDetailContainer}>
